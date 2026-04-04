@@ -8,6 +8,6 @@ CREATE TABLE profiles (
     is_active BOOLEAN NOT NULL DEFAULT true,
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW()
-)
+);
 
 CREATE INDEX idx_profiles_user_id ON profiles(user_id);
