@@ -62,4 +62,6 @@ class JwtService(private val jwtProperties: JwtProperties) {
             .parseSignedClaims(token)
             .payload
     }
+
+    fun getRefreshExpiration(): Long = jwtProperties.refreshExpiration
 }
