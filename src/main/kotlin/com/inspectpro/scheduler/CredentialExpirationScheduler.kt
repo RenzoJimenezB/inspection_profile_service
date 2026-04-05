@@ -14,7 +14,7 @@ class CredentialExpirationScheduler(
     @Scheduled(cron = "0 0 2 * * *")
     fun processExpiredCredentials() {
         logger.info("Starting credential expiration job")
-        schedulerService.processExpiredCredential()
+        schedulerService.processExpiredCredentials()
         schedulerService.processExpiredSubscriptions()
         logger.info("Completed credential expiration job")
     }

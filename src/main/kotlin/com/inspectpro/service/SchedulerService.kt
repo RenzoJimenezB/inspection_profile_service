@@ -22,7 +22,7 @@ class SchedulerService(
     private val logger = LoggerFactory.getLogger(SchedulerService::class.java)
 
     @Transactional
-    fun processExpiredCredential() {
+    fun processExpiredCredentials() {
         val today = LocalDate.now()
         val expiredCredentials = credentialRepository.findExpiredApprovedCredentials(today)
 
