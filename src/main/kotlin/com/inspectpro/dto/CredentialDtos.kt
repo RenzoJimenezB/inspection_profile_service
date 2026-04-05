@@ -34,3 +34,8 @@ data class CredentialResponse(
     val createdAt: Instant,
     val updatedAt: Instant
 )
+
+data class UpdateCredentialStatusRequest(
+    @field:NotNull(message = "Status is required")
+    var status: CredentialStatus
+)
