@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface ProfileRepository : JpaRepository<Profile, Long> {
     fun findAllByUserIdAndIsActiveTrue(userId: Long): List<Profile>
-    fun findByIdAndUserId(id: Long, userId: Long): Profile?
+    fun findByIdAndUserIdAndIsActiveTrue(id: Long, userId: Long): Profile?
 }
