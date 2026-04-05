@@ -3,6 +3,7 @@ package com.inspectpro.controller
 import com.inspectpro.dto.CredentialResponse
 import com.inspectpro.dto.UpdateCredentialStatusRequest
 import com.inspectpro.service.CredentialService
+import com.inspectpro.service.SchedulerService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
