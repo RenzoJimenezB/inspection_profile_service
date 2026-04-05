@@ -4,6 +4,8 @@ import com.inspectpro.dto.CredentialRequest
 import com.inspectpro.dto.CredentialResponse
 import com.inspectpro.security.AuthenticatedUser
 import com.inspectpro.service.CredentialService
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,8 +20,16 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/credentials")
+@Tag(
+    name = "Credentials",
+    description = "Professional credential management"
+)
 class CredentialController(private val credentialService: CredentialService) {
 
+    @Operation(
+        summary = "Submit credential",
+        description = "Submits a new professional credential for review"
+    )
     @PostMapping
     fun submitCredential(
         @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
@@ -29,6 +39,10 @@ class CredentialController(private val credentialService: CredentialService) {
             .body(credentialService.submitCredential(authenticatedUser, request))
     }
 
+    @Operation(
+        summary = "List credentials",
+        description = "Returns all credentials for the current profile"
+    )
     @GetMapping
     fun getCredentials(
         @AuthenticationPrincipal authenticatedUser: AuthenticatedUser
@@ -36,6 +50,10 @@ class CredentialController(private val credentialService: CredentialService) {
         return ResponseEntity.ok(credentialService.getCredentials(authenticatedUser))
     }
 
+    @Operation(
+        summary = "Get credential",
+        description = "Returns a specific credential by ID"
+    )
     @GetMapping("/{id}")
     fun getCredential(
         @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
@@ -44,6 +62,10 @@ class CredentialController(private val credentialService: CredentialService) {
         return ResponseEntity.ok(credentialService.getCredential(authenticatedUser, id))
     }
 
+    @Operation(
+        summary = "Delete credential",
+        description = "Deletes a PENDING or REJECTED credential"
+    )
     @DeleteMapping("/{id}")
     fun deleteCredential(
         @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
