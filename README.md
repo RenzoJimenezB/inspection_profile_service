@@ -51,7 +51,7 @@ The API will be available at `http://localhost:8080`
 
 ## API Documentation
 
-Swagger UI is available at `http://localhost:8080/swagger-ui.html`
+Swagger UI is available at `http://localhost:8080/swagger-ui/index.html`
 
 A Postman collection is available at `postman/collection.json` with a
 complete end-to-end testing workflow documented in the collection description.
