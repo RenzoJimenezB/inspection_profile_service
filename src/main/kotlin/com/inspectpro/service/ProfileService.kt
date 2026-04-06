@@ -1,8 +1,10 @@
 package com.inspectpro.service
 
 import com.inspectpro.dto.AuthResponse
+import com.inspectpro.dto.CreateProfileRequest
 import com.inspectpro.dto.ProfileResponse
 import com.inspectpro.dto.UpdateProfileRequest
+import com.inspectpro.exception.BusinessException
 import com.inspectpro.exception.ForbiddenException
 import com.inspectpro.exception.ResourceNotFoundException
 import com.inspectpro.model.Profile
@@ -23,6 +25,28 @@ class ProfileService(
     private val jwtService: JwtService,
     private val refreshTokenRepository: RefreshTokenRepository
 ) {
+
+    @Transactional
+    fun createProfile(
+        authenticatedUser: AuthenticatedUser,
+        request: CreateProfileRequest
+    ): ProfileResponse {
+        val user = userRepository.findById(authenticatedUser.userId)
+            .orElseThrow { ResourceNotFoundException("User not found") }
+
+        val existingProfiles = profileRepository.findAllByUserIdAndIsActiveTrue(authenticatedUser.userId)
+
+        if (existingProfiles.size >= 2) {
+            throw BusinessException("Users can only have a maximum of 2 profiles (personal and company)")
+        }
+        val profile = profileRepository.save(
+            Profile(
+                user = user,
+                displayName = request.displayName,
+            )
+        )
+        return profile.toResponse()
+    }
 
     fun getCurrentProfile(authenticatedUser: AuthenticatedUser): ProfileResponse {
         val profile = profileRepository.findByIdAndUserIdAndIsActiveTrue(
