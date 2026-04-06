@@ -5,6 +5,7 @@ import com.inspectpro.security.RateLimitingFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -44,6 +45,35 @@ class SecurityConfig(
                 rateLimitingFilter,
                 JwtAuthenticationFilter::class.java
             )
+            .exceptionHandling { exceptions ->
+                exceptions
+                    .authenticationEntryPoint { _, response, _ ->
+                        response.status = HttpStatus.UNAUTHORIZED.value()
+                        response.contentType = "application/json"
+                        response.writer.write(
+                            """
+                            {
+                                "status": 401,
+                                "error": "Unauthorized",
+                                "message": "Authentication required"
+                            }
+                        """.trimIndent()
+                        )
+                    }
+                    .accessDeniedHandler { _, response, _ ->
+                        response.status = HttpStatus.FORBIDDEN.value()
+                        response.contentType = "application/json"
+                        response.writer.write(
+                            """
+                            {
+                                "status": 403,
+                                "error": "Forbidden",
+                                "message": "Access denied"
+                            }
+                            """.trimIndent()
+                        )
+                    }
+            }
         return http.build()
     }
 

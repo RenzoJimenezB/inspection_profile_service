@@ -1,6 +1,9 @@
 spring:
   application:
     name: inspection-profile-service
+  web:
+    resources:
+      add-mappings: false
 
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/inspectpro}
