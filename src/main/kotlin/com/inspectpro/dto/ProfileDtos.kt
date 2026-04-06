@@ -24,3 +24,13 @@ data class UpdateProfileRequest(
     )
     val displayName: String,
 )
+
+data class CreateProfileRequest(
+    @field:NotBlank(message = "Display name is required")
+    @field:Size(max = 100, message = "Display name cannot exceed 100 characters")
+    @field:Pattern(
+        regexp = "^[a-zA-Z0-9-]+$",
+        message = "Display name can only contain letters, numbers, spaces and hyphens"
+    )
+    val displayName: String,
+)

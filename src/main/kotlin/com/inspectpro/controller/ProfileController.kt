@@ -1,6 +1,7 @@
 package com.inspectpro.controller
 
 import com.inspectpro.dto.AuthResponse
+import com.inspectpro.dto.CreateProfileRequest
 import com.inspectpro.dto.ProfileResponse
 import com.inspectpro.dto.UpdateProfileRequest
 import com.inspectpro.security.AuthenticatedUser
@@ -8,6 +9,7 @@ import com.inspectpro.service.ProfileService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
@@ -25,6 +27,19 @@ import org.springframework.web.bind.annotation.RestController
     description = "Profile management and context switching"
 )
 class ProfileController(private val profileService: ProfileService) {
+
+    @Operation(
+        summary = "Create company profile",
+        description = "Create a second company profile for the authenticated user. Maximum 2 profiles allowed",
+    )
+    @PostMapping
+    fun createProfile(
+        @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
+        @Valid @RequestBody request: CreateProfileRequest
+    ): ResponseEntity<ProfileResponse> {
+        return ResponseEntity.status(HttpStatus.CREATED)
+            .body(profileService.createProfile(authenticatedUser, request))
+    }
 
     @Operation(
         summary = "Get current profile",
