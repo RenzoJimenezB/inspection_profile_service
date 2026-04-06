@@ -1,6 +1,7 @@
 package com.inspectpro.config
 
 import com.inspectpro.security.JwtAuthenticationFilter
+import com.inspectpro.security.RateLimitingFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -21,7 +22,7 @@ class SecurityConfig(
 ) {
 
     @Bean
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun securityFilterChain(http: HttpSecurity, rateLimitingFilter: RateLimitingFilter): SecurityFilterChain {
         http
             .csrf { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
@@ -36,6 +37,10 @@ class SecurityConfig(
             .addFilterBefore(
                 jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter::class.java
+            )
+            .addFilterAfter(
+                rateLimitingFilter,
+                JwtAuthenticationFilter::class.java
             )
         return http.build()
     }
