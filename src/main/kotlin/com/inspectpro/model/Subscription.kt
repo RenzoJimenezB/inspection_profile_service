@@ -24,7 +24,7 @@ class Subscription(
     val user: User,
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "subscription_tier")
     var tier: SubscriptionTier = SubscriptionTier.BASIC,
 
     @Column(name = "is_active", nullable = false)

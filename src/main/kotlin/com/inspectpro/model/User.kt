@@ -21,6 +21,6 @@ class User(
     var password: String,
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "user_role")
     var role: UserRole = UserRole.USER,
 ) : BaseEntity()

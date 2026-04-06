@@ -25,7 +25,7 @@ class Profile(
     var displayName: String,
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
+    @Column(name = "type", nullable = false, columnDefinition = "profile_type")
     var type: ProfileType = ProfileType.BASIC,
 
     @Column(name = "is_active", nullable = false)
