@@ -10,6 +10,31 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: inspectpro
+          POSTGRES_USER: inspectpro
+          POSTGRES_PASSWORD: inspectpro
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmnd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -32,6 +57,13 @@ jobs:
 
       - name: Run tests
         run: ./mvnw test
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/inspectpro
+          SPRING_DATASOURCE_USERNAME: inspectpro
+          SPRING_DATASOURCE_PASSWORD: inspectpro
+          SPRING_DATA_REDIS_HOST: localhost
+          SPRING_DATA_REDIS_PORT: 6379
+          JWT_SECRET: ci-test-secret-key-minimum-32-characters
 
       - name: Build Docker image
         run: docker build -t inspection-profile-service .
