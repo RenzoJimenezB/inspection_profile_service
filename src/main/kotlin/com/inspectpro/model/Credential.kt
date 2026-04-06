@@ -32,7 +32,7 @@ class Credential(
     val profile: Profile,
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "credential_type")
+    @Column(nullable = false)
     val type: CredentialType,
 
     @Column(nullable = false)
@@ -45,6 +45,6 @@ class Credential(
     val expiryDate: LocalDate,
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "credential_status")
+    @Column(nullable = false)
     var status: CredentialStatus = CredentialStatus.PENDING,
 ) : BaseEntity()
