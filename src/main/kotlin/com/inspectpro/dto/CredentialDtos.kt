@@ -9,8 +9,8 @@ import java.time.Instant
 import java.time.LocalDate
 
 data class CredentialRequest(
-    @field:NotBlank(message = "Credential type is required")
-    val type: CredentialType,
+    @field:NotNull(message = "Credential type is required")
+    var type: CredentialType,
 
     @field:NotBlank(message = "Issuer is required")
     val issuer: String,
