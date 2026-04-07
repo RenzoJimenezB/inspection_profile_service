@@ -1,6 +1,7 @@
 package com.inspectpro.dto
 
 import com.inspectpro.model.ProfileType
+import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
@@ -22,6 +23,7 @@ data class UpdateProfileRequest(
         regexp = "^[a-zA-Z0-9 -]+$",
         message = "Display name can only contain letters, numbers, spaces and hyphens"
     )
+    @Schema(example = "John Smith")
     val displayName: String,
 )
 
@@ -32,5 +34,6 @@ data class CreateProfileRequest(
         regexp = "^[a-zA-Z0-9 -]+$",
         message = "Display name can only contain letters, numbers, spaces and hyphens"
     )
+    @Schema(example = "My Company LLC")
     val displayName: String,
 )

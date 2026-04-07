@@ -1,6 +1,7 @@
 package com.inspectpro.dto
 
 import com.inspectpro.model.SubscriptionTier
+import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import java.time.Instant
@@ -17,6 +18,7 @@ data class SubscriptionResponse(
 
 data class CheckFeatureRequest(
     @field:NotBlank(message = "Feature is required")
+    @Schema(example = "PDF_EXPORT")
     val feature: String,
 )
 
@@ -27,11 +29,14 @@ data class CheckFeatureResponse(
 
 data class StripeWebhookPayload(
     @field:NotBlank(message = "Event type is required")
+    @Schema(example = "subscription.updated")
     val eventType: String,
 
     @field:NotNull(message = "User ID is required")
+    @Schema(example = "2")
     var userId: Long,
 
     @field:NotNull(message = "Tier is required")
+    @Schema(example = "ENHANCED")
     var tier: SubscriptionTier,
 )
