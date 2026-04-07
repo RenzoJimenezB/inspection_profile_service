@@ -283,6 +283,12 @@ Logs include timestamp, level, logger name, thread, and correlation ID.
   POST /api/v1/auth/refresh twice with the same token. Second call returns 400
 - **Rate limiting:** Set to 100 requests per minute per user. Exceeding
   this returns 429 Too Many Requests
+- **Reactive stack:** WebFlux + R2DBC was suggested as a bonus implementation.
+  Spring MVC was chosen for its maturity, simpler debugging, and faster
+  development within the time constraints. A migration to WebFlux + R2DBC would
+  provide non-blocking I/O and better scalability under high concurrency,
+  replacing JPA with R2DBC repositories and adapting all service layers to
+  return Mono/Flux types.
 
 ---
 
