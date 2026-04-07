@@ -53,6 +53,13 @@ The API will be available at `http://localhost:8080`
 
 Swagger UI is available at `http://localhost:8080/swagger-ui/index.html`
 
+To test protected endpoints in Swagger UI:
+
+1. Register or login to get an access token
+2. Click the **Authorize** button at the top
+3. Enter: `Bearer <your-access-token>`
+4. Click Authorize
+
 A Postman collection is available at `postman/collection.json` with a
 complete end-to-end testing workflow documented in the collection description.
 
